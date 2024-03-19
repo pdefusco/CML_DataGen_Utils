@@ -58,10 +58,10 @@ class BankDataGen:
     def __init__(self, spark):
         self.spark = spark
 
-    def transactionsDataGen(self, shuffle_partitions_requested = 10, partitions_requested = 10, data_rows = 10000):
+    def transactionsDataGen(self, shuffle_partitions_requested = 1, partitions_requested = 1, data_rows = 10000):
 
         # setup use of Faker
-        FakerTextUS = FakerTextFactory(locale=['fakerES'], providers=[bank])
+        FakerTextUS = FakerTextFactory(locale=['es_ES'], providers=[bank])
 
         # partition parameters etc.
         self.spark.conf.set("spark.sql.shuffle.partitions", shuffle_partitions_requested)
@@ -71,7 +71,7 @@ class BankDataGen:
                     .withColumn("credit_card_provider", text=FakerTextUS("credit_card_provider") )
                     .withColumn("transaction_type", "string", values=["purchase", "cash_advance"], random=True, weights=[9, 1])
                     .withColumn("event_ts", "timestamp", begin="2024-01-01 01:00:00",end="2024-03-31 23:59:00",interval="1 minute", random=True)
-                    .withColumn("transaction_currency", "string", values=["USD", "ARS", "COP", "BRL", "MEX"], weights=[3,1,6,1,1])
+                    .withColumn("transaction_currency", "string", values=["USD", "ARS", "COP", "BRL", "MEX"], random=True, weights=[3,1,4,1,1])
                     .withColumn("transaction_amount", "decimal", minValue=0.01, maxValue=300000, random=True)
                     )
 
@@ -82,7 +82,7 @@ class BankDataGen:
         return df
 
 
-    def piiDataGen(self, shuffle_partitions_requested = 10, partitions_requested = 10, data_rows = 10000):
+    def piiDataGen(self, shuffle_partitions_requested = 1, partitions_requested = 1, data_rows = 10000):
 
         # setup use of Faker
         FakerTextUS = FakerTextFactory(locale=['en_US'], providers=[bank])
@@ -114,7 +114,7 @@ import cml.data_v1 as cmldata
 #SparkContext.setSystemProperty('spark.executor.cores', '1')
 #SparkContext.setSystemProperty('spark.executor.memory', '2g')
 
-CONNECTION_NAME = "se-aw-mdl"
+CONNECTION_NAME = "go01-aw-dl"
 conn = cmldata.get_connection(CONNECTION_NAME)
 spark = conn.get_spark_session()
 
