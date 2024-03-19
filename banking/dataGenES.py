@@ -71,7 +71,7 @@ class BankDataGen:
                     .withColumn("credit_card_provider", text=FakerTextUS("credit_card_provider") )
                     .withColumn("transaction_type", "string", values=["purchase", "cash_advance"], random=True, weights=[9, 1])
                     .withColumn("event_ts", "timestamp", begin="2024-01-01 01:00:00",end="2024-03-31 23:59:00",interval="1 minute", random=True)
-                    .withColumn("transaction_currency", values=["USD", "ARS", "COP", "BRL", "CLP", "MEX", "CAD"])
+                    .withColumn("transaction_currency", "string", values=["USD", "ARS", "COP", "BRL", "MEX"], weights=[3,1,6,1,1])
                     .withColumn("transaction_amount", "decimal", minValue=0.01, maxValue=300000, random=True)
                     )
 
