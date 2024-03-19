@@ -121,4 +121,4 @@ spark = conn.get_spark_session()
 myDG = BankDataGen(spark)
 
 transactionsDf = myDG.transactionsDataGen()
-transactionsDf.write.format("csv").mode("overwrite").save("s3a://goes-se-sandbox01/datalake/pdefusco/transactions/es/")
+transactionsDf.write.format("csv").option("header", "true").mode("overwrite").save("s3a://go01-demo/datalake/pdefusco/transactions/es/")
