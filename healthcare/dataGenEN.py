@@ -89,6 +89,8 @@ class HealthDataGen:
                     .withColumn("allergy_hist", "string", values=["0", "1"], random=True, weights=[7, 3])
                     .withColumn("lung_compl", "string", values=["0", "1"], random=True, weights=[8, 2])
                     .withColumn("gender", "string", values=["0", "1"], random=True, weights=[5, 5])
+                    .withColumn("asthmatic_bronchitis", "string", values=["0", "1"], random=True, weights=[7, 3])
+
                     )
 
         df = fakerDataspec.build()
@@ -96,6 +98,7 @@ class HealthDataGen:
         df = df.withColumn("allergy_hist", df["allergy_hist"].cast(IntegerType()))
         df = df.withColumn("lung_compl", df["lung_compl"].cast(IntegerType()))
         df = df.withColumn("gender", df["gender"].cast(IntegerType()))
+        df = df.withColumn("asthmatic_bronchitis", df["asthmatic_bronchitis"].cast(IntegerType()))
 
         return df
 
