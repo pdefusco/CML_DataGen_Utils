@@ -158,7 +158,7 @@ def main():
     # Create CML Spark Connection
     spark = dg.createSparkConnection()
     df_geospatial = dg.dataGen(spark)
-    df_geospatial = dg.addCorrelatedColumn(df_desmoines)
+    df_geospatial = dg.addCorrelatedColumn(df_geospatial)
 
     # Create Iceberg Table in Database
     #dg.createOrReplace(df_desmoines)
